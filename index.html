@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rotation Program Game</title>
+
+
+
+    <script src="index.js" defer type="module"></script>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <div id="titleBar">
+        <nav>
+            <div id="title">
+                <img src="dairyLarry.png" alt="Dairy Cow" width=100px>
+            </div>
+            <div id="titletext">
+                <p id="dairyProgramText">Dairy Floater Program</p>
+            </div>
+            <div class="nav-items">
+                <div class="dropdown">
+                    <button class="dropbtn">Menu</button>
+                    <div class="dropdown-content">
+                        <a href="/index.html">Home</a>
+                        <a href="/schedule.html">Schedule</a>
+                        <a href="/rotations.html">Rotations</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    </nav>
+    </div>
+    <section class="introMessage">
+        <div class="messageContainer">
+            <div class="column-left">
+                <h1>How To Use</h1>
+                <p>Copy and paste the schedule from the when to work app into the prompted section,
+                    you will then be directed to the schedule page and from there you can edit the schedule.
+                    After that there will be a create rotations button which will redirect you to a page where you can
+                    actually create the rotations.
+                </p>
+            </div>
+            <div class="column-right">
+                <textarea id="scheduleInput" name="scheduleInput" rows="5" placeholder="Paste your schedule here"></textarea>
+                <button id="button">Create Schedule</button>
+            </div>
+        </div>
+    </section>
+
+
+
+</body>
+
+</html>
