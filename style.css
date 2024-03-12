@@ -238,3 +238,17 @@ nav {
     transform:translate(-50%,-50%);
 }
 
+#rotations {
+    position: fixed;
+    font-weight: 600;
+    color: #6C2B40;
+    width: 80%;
+    transform: translate(-50%);
+    left: 50%; 
+    top: 260px;
+    overflow-y: auto; /* Optional: Add vertical scroll if content overflows */
+    flex: 1 1 100%;
+
+    box-sizing: border-box; 
+
+}

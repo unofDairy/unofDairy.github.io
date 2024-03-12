@@ -2,8 +2,12 @@ import Employee from './Employee.js';
 import Schedule from './Schedule.js';
 import CurrentPositions from './CurrentPositions.js';
 
+
+
+
 function createRotations(employees, startTime, endTime, numLines, numCash, numOrderTakers) {
     // vars
+    let sched = "";
     
     const schedule = new Schedule(startTime, endTime, numLines);
     let currentPositions = [];
@@ -66,9 +70,10 @@ function createRotations(employees, startTime, endTime, numLines, numCash, numOr
 
        // console.log(i / 2 + startTime - 12 + " PM Cashier: " + currentPositions[i].getCashiers() + " Order Taker: " + currentPositions[i].getOrderTakers());
 
-        console.log(returnTime(startTime, i) + " - " + returnTime(startTime, i + 1) + ": " + currentPositions[i].getCashiers() + " Order Taker: " + currentPositions[i].getOrderTakers());
+        sched += returnTime(startTime, i) + " - " + returnTime(startTime, i + 1) + ": " + " Cashiers: " + currentPositions[i].getCashiers() + " Order Taker: " + currentPositions[i].getOrderTakers() + "\n";
     }
 
+    document.getElementById('rotations').innerText = sched;
 
 }
 

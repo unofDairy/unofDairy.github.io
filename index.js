@@ -65,7 +65,7 @@ function createDisplaySchedule(employees) {
     localStorage.setItem('rightSide', JSON.stringify(rightSide));
 
     // Now navigate to schedule.html
-    // window.location.href = "schedule.html";
+     window.location.href = "schedule.html";
 }
 
 
