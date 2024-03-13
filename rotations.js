@@ -3,12 +3,33 @@ import Schedule from './Schedule.js';
 import CurrentPositions from './CurrentPositions.js';
 
 
+function number_test(n) {
+    var result = (n - Math.floor(n)) !== 0;
 
+    if (result)
+        return false;
+    else
+        return true;
+}
+function formatName(name, length) {
+    if (name.length > length) {
+        name.slice(0,length);
+    }
+    let namefmt = "";
+    let needed = length - name.length;
+    for (let i = 0; i < needed; i++) {
+        namefmt += "&nbsp;";
+    }
+    namefmt += name;
+    console.log(namefmt);
+    return namefmt;
+}
 
 function createRotations(employees, startTime, endTime, numLines, numCash, numOrderTakers) {
     // vars
-    let sched = "";
-    
+    let lines = [];
+    let floaters = false;
+
     const schedule = new Schedule(startTime, endTime, numLines);
     let currentPositions = [];
     let time = 0;
@@ -43,7 +64,7 @@ function createRotations(employees, startTime, endTime, numLines, numCash, numOr
         }
         for (let j = 0; j < currentPositions[i].numOrderTakers; j++) {
             for (let k = 0; k < employees.length; k++) {
-               // console.log(employees[k].shouldFloat(time, i, currentPositions));
+                // console.log(employees[k].shouldFloat(time, i, currentPositions));
                 if (employees[k].shouldFloat(time, i, currentPositions) && !currentPositions[i].hasOrderTaker(j)) {
                     //  console.log(k + " " + employees[k].name);
                     currentPositions[i].changeOrderTaker(j, employees[k].name);
@@ -65,24 +86,81 @@ function createRotations(employees, startTime, endTime, numLines, numCash, numOr
         });
     }
 
-    for (let i = 0; i < currentPositions.length; i++) {
-        
-
-       // console.log(i / 2 + startTime - 12 + " PM Cashier: " + currentPositions[i].getCashiers() + " Order Taker: " + currentPositions[i].getOrderTakers());
-
-        sched += returnTime(startTime, i) + " - " + returnTime(startTime, i + 1) + ": " + " Cashiers: " + currentPositions[i].getCashiers() + " Order Taker: " + currentPositions[i].getOrderTakers() + "\n";
+    if (!number_test(numOrderTakers / numLines)) {
+        lines.push("");
+        floaters = true;
     }
 
-    document.getElementById('rotations').innerText = sched;
+    for (let i = 0; i < numLines; i++) {
+        lines.push("");
+    }
+
+
+
+    for (let i = 0; i < currentPositions.length; i++) {
+
+        for (let j = 0; j < lines.length; j++) {
+            // get time
+            lines[j] += returnTime(startTime, i) + " - " + returnTime(startTime, i + 1) + ": ";
+
+            if (j <= numCash - 1) {
+
+                lines[j] += "Cashier: " + formatName(currentPositions[i].getCashier(j), 20) + "           ";
+            }
+
+            let num = Math.floor(numOrderTakers / numLines);
+
+            lines[j] += formatName("Order Takers:  ", 20);
+
+            if (j != 3) {
+                for (let k = 0; k < num; k++) {
+                    const starter = num * j;
+                    lines[j] += formatName(currentPositions[i].getOrderTaker(k + starter), 20) + "     ";
+                }
+            }
+            else {
+                const numFloaters = numOrderTakers - num * numLines;
+                for (let k = 0; k < numFloaters; k++) {
+                    const starter = num * j;
+                    lines[j] += formatName(currentPositions[i].getOrderTaker(k + starter), 20) + "    ";
+                }
+            }
+
+            lines[j] += "<br>";
+
+        }
+        // console.log(i / 2 + startTime - 12 + " PM Cashier: " + currentPositions[i].getCashiers() + " Order Taker: " + currentPositions[i].getOrderTakers());
+
+        // sched += returnTime(startTime, i) + " - " + returnTime(startTime, i + 1) + ": " + " Cashiers: " + currentPositions[i].getCashiers() + " Order Taker: " + currentPositions[i].getOrderTakers() + "\n";
+    }
+
+    for (let j = 0; j < lines.length; j++) {
+        if (j == 0) {
+            lines[j] = "Walk-Ups:<br><br>" + lines[j];
+        }
+        else if (j == 1) {
+            lines[j] = "<br><br>Driveway<br><br>" +  lines[j];
+        }
+        else if (j == 2 && numLines == 3) {
+            lines[j] = "<br><br>Curb<br><br>" + lines[j];
+        }
+        else if (j == 2 && floaters) {
+            lines[j] = "<br><br>Floaters<br><br>" + lines[j]; 
+        }
+        else if (j == 3 && floaters) {
+        lines[j] = "<br><br>Floaters<br><br>" + lines[j];
+        }
+    }
+    document.getElementById('rotations').innerHTML = lines.join("");
 
 }
 
 function returnTime(startTime, i) {
-    let number = i/2
+    let number = i / 2
     if (Math.abs(number - Math.floor(number)) === 0.5) {
-        return (i-1)/2 + startTime - 12 + ":30 PM";
+        return (i - 1) / 2 + startTime - 12 + ":30 PM";
     } else {
-        return i/2 + startTime - 12 + ":00 PM";
+        return i / 2 + startTime - 12 + ":00 PM";
     }
 }
 function prepRotations() {
