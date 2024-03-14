@@ -2,6 +2,17 @@ import Employee from './Employee.js';
 import Schedule from './Schedule.js';
 import CurrentPositions from './CurrentPositions.js';
 
+function copyBtn() {
+
+    let stringText = document.getElementById("rotations").innerText;
+
+    stringText.replaceAll('&nspb;', ' ');
+    console.log("Copied");
+
+    navigator.clipboard.writeText(stringText);
+
+}
+
 
 function number_test(n) {
     var result = (n - Math.floor(n)) !== 0;
@@ -13,7 +24,7 @@ function number_test(n) {
 }
 function formatName(name, length) {
     if (name.length > length) {
-        name.slice(0,length);
+        name.slice(0, length);
     }
     let namefmt = "";
     let needed = length - name.length;
@@ -110,7 +121,7 @@ function createRotations(employees, startTime, endTime, numLines, numCash, numOr
 
             let num = Math.floor(numOrderTakers / numLines);
 
-            lines[j] += formatName("Order Takers:  ", 20);
+            lines[j] += formatName("Order Taker:  ", 20);
 
             if (j != 3) {
                 for (let k = 0; k < num; k++) {
@@ -139,16 +150,16 @@ function createRotations(employees, startTime, endTime, numLines, numCash, numOr
             lines[j] = "Walk-Ups:<br><br>" + lines[j];
         }
         else if (j == 1) {
-            lines[j] = "<br><br>Driveway<br><br>" +  lines[j];
+            lines[j] = "<br><br>Driveway<br><br>" + lines[j];
         }
         else if (j == 2 && numLines == 3) {
             lines[j] = "<br><br>Curb<br><br>" + lines[j];
         }
         else if (j == 2 && floaters) {
-            lines[j] = "<br><br>Floaters<br><br>" + lines[j]; 
+            lines[j] = "<br><br>Floaters<br><br>" + lines[j];
         }
         else if (j == 3 && floaters) {
-        lines[j] = "<br><br>Floaters<br><br>" + lines[j];
+            lines[j] = "<br><br>Floaters<br><br>" + lines[j];
         }
     }
     document.getElementById('rotations').innerHTML = lines.join("");
@@ -164,6 +175,9 @@ function returnTime(startTime, i) {
     }
 }
 function prepRotations() {
+    var copyText = document.getElementById('copyText');
+    copyText.style.display = 'inline-block';
+
     let employees = []
     const leftSide = JSON.parse(localStorage.getItem('leftSide'));
     const rightSide = JSON.parse(localStorage.getItem('rightSide'));
@@ -222,3 +236,5 @@ function prepRotations() {
 }
 
 document.getElementById("createRotationsButton").addEventListener('click', prepRotations);
+
+document.getElementById("copyText").addEventListener('click',copyBtn);
