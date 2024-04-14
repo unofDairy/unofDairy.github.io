@@ -7,7 +7,7 @@ function copyBtn() {
     let stringText = document.getElementById("rotations").innerText;
 
     stringText.replaceAll('&nspb;', ' ');
-    console.log("Copied");
+    // console.log("Copied");
 
     navigator.clipboard.writeText(stringText);
 
@@ -32,7 +32,7 @@ function formatName(name, length) {
         namefmt += "&nbsp;";
     }
     namefmt += name;
-    console.log(namefmt);
+    // console.log(namefmt);
     return namefmt;
 }
 
@@ -123,7 +123,7 @@ function createRotations(employees, startTime, endTime, numLines, numCash, numOr
 
             lines[j] += formatName("Order Taker:  ", 20);
 
-            if (j != 3) {
+            if (j != numLines ) {
                 for (let k = 0; k < num; k++) {
                     const starter = num * j;
                     lines[j] += formatName(currentPositions[i].getOrderTaker(k + starter), 20) + "     ";
@@ -150,10 +150,10 @@ function createRotations(employees, startTime, endTime, numLines, numCash, numOr
             lines[j] = "Walk-Ups:<br><br>" + lines[j];
         }
         else if (j == 1) {
-            lines[j] = "<br><br>Driveway<br><br>" + lines[j];
+            lines[j] = "<br><br>Curb<br><br>" + lines[j];
         }
         else if (j == 2 && numLines == 3) {
-            lines[j] = "<br><br>Curb<br><br>" + lines[j];
+            lines[j] = "<br><br>Driveway<br><br>" + lines[j];
         }
         else if (j == 2 && floaters) {
             lines[j] = "<br><br>Floaters<br><br>" + lines[j];
