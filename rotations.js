@@ -237,4 +237,6 @@ function prepRotations() {
 
 document.getElementById("createRotationsButton").addEventListener('click', prepRotations);
 
+
+
 document.getElementById("copyText").addEventListener('click',copyBtn);
